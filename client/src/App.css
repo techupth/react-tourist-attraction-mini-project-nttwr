@@ -5,6 +5,11 @@
   font-family: Kanit;
 }
 
+.header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
 .page-title {
   text-align: center;
   padding-top: 30px;
@@ -27,7 +32,9 @@ input::placeholder {
   color: gray;
   text-align: center;
 }
-input:active {
+
+input:focus {
+  outline: none;
   border-bottom: 1px solid #1893f8;
 }
 
@@ -96,5 +103,12 @@ img {
 .copy-link {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   cursor: pointer;
+  font-size: 16px;
+  color: #1893f8;
+  font-weight: 200;
+  width: auto;
+  margin-top: 5px;
+  gap: 5px;
 }

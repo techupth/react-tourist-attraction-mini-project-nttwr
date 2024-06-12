@@ -17,32 +17,40 @@ function TravelBlog() {
   };
   const handleInputChange = (e) => {
     e.preventDefault();
-    setSearchInput(e.target.value);
+    setSearchInput(e.target.value.trim());
   };
 
   const handleCopyLink = (url) => {
     navigator.clipboard.writeText(url);
+    alert("🤩 copied 🤩");
+  };
+  const handleTagClick = (item) => {
+    if (!searchInput.includes(item)) {
+      const newInput = (searchInput + " " + item).trim();
+      setSearchInput(newInput);
+    } else {
+      alert("You already choose this tag 🫣");
+    }
   };
   useEffect(() => {
-    if (searchInput) {
-      getContent(searchInput);
-    } else {
-      getContent(searchInput);
-    }
+    getContent(searchInput);
   }, [searchInput]);
   return (
     <>
-      <h1 className="page-title">เที่ยวไหนดี</h1>
-      <div className="input-box">
-        <p className="input-title">ค้นหาที่เที่ยว</p>
-        <input
-          className="input-area"
-          type="text"
-          placeholder="หาที่เที่ยวแล้วไปกัน . . ."
-          value={searchInput}
-          onChange={handleInputChange}
-        />
+      <div className="header">
+        <h1 className="page-title">เที่ยวไหนดี</h1>
+        <div className="input-box">
+          <p className="input-title">ค้นหาที่เที่ยว</p>
+          <input
+            className="input-area"
+            type="text"
+            placeholder="หาที่เที่ยวแล้วไปกัน . . ."
+            value={searchInput}
+            onChange={handleInputChange}
+          />
+        </div>
       </div>
+
       <ul className="content-list">
         {content.map((item) => {
           return (
@@ -81,7 +89,10 @@ function TravelBlog() {
                               <span> และ </span>
                               <span
                                 className="tag"
-                                onClick={() => setSearchInput(tag)}
+                                //onClick={() => setSearchInput(tag)}
+                                onClick={() => {
+                                  handleTagClick(tag);
+                                }}
                               >
                                 {tag}
                               </span>
@@ -93,7 +104,9 @@ function TravelBlog() {
                             <>
                               <span
                                 className="tag"
-                                onClick={() => setSearchInput(tag)}
+                                onClick={() => {
+                                  handleTagClick(tag);
+                                }}
                               >
                                 {tag}
                               </span>
@@ -108,7 +121,13 @@ function TravelBlog() {
                     <ul className="morePhoto">
                       {item.photos.map((item, index) => {
                         if (index > 0) {
-                          return <img className="smallPhoto" src={item} />;
+                          return (
+                            <img
+                              className="smallPhoto"
+                              src={item}
+                              alt={index}
+                            />
+                          );
                         }
                       })}
                     </ul>
@@ -117,6 +136,7 @@ function TravelBlog() {
                     className="copy-link"
                     onClick={() => handleCopyLink(item.url)}
                   >
+                    <span>Copy to clipboard</span>
                     <CopyIcon />
                   </div>
                 </div>
